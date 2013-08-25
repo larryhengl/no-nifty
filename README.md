@@ -6,12 +6,4 @@ This is an un-sponsored activity.  Novartis has no affiliation and liability for
 
 ## Details
 
-#### What 
-
-#### Where
-
-#### When
-October or November 2013
-
-#### Who
-Add your name to the list so we'll know you're just as crazy!  Link provided to spreadsheet in separate email (or ask me).
+[At the website](http://larryhengl.github.io/no-nifty/)
