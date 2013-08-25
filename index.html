@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link href="css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
     <link href="css/site.css" media="screen" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <h1>No-Nifty</h1>
 
     <div id="content">
-    	<table>
+    	<dl class="dl-horizontal">
+    	  <dt>What</dt><dd>...</dd>
+        <dt>Why</dt><dd>...</dd>
+        <dt>Where</dt><dd>...</dd>
+        <dt>Who and when</dt><dd>...</dd>
+    	</dl>
+
+
+    	<table class="table table-condensed">
     		<thead><th>Name</th><th>Preferred Dates</th></thead>
     		<tbody id="peeps"></tbody>
     	</table>
@@ -15,8 +24,8 @@
 
     <script id="niftyers-template" type="text/x-handlebars-template">
       <tr class="entry">
-        <td><span>{{first name}} {{last init}}</span></td>
-        <td>{{pref date 1}} Or {{pref date 2}} Or {{pref date 3}}</td>
+        <td><span>{{firstname}} {{lastinit}}</span></td>
+        <td>{{prefdate1}}</br>{{prefdate2}}</br>{{prefdate3}}</td>
       </tr>
     </script>
 
@@ -24,8 +33,9 @@
     <script type="text/javascript" src="js/handlebars.js"></script>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/tabletop.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript">
-      var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/ccc?key=0Ap4bJiYhk0XrdFg1NThXMGdEOFRHamNVMk5fZkw3aXc#gid=0';
+      var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ap4bJiYhk0XrdFg1NThXMGdEOFRHamNVMk5fZkw3aXc&output=html';
 
       $(document).ready( function() {
         Tabletop.init( { key: public_spreadsheet_url,
