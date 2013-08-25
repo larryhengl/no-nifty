@@ -1,50 +1,47 @@
+<!DOCTYPE html>
 <html>
-	<head>
-		<title>No-Nifty</title>
-		<script type="text/javascript" src='js/jquery.js '></script>
-		<script type="text/javascript" src='js/tabletop.js'></script>
+  <head>
+    <link href="css/site.css" media="screen" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>No-Nifty</h1>
 
- 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<link media="screen" rel="stylesheet" type="text/css" href="css/site.css"> 
-	</head>
-<body>
-	<div id="wrapper">
-		<h1>No-Nifty</h1>
-		<div>
-	<script id="hackSpotsTable" type="text/html">
-		<table>
-		<tr><th class="tHeader">Name</th><th class="tHeader">Address</th><th class="tHeader">City</th><th class="tHeader">State</th><th class="tHeader">Country</th><th class="">Elsewhere</th></tr>
-		  {{#rows}}
-		  	<tr id="{{rowNumber}}" class="spotRow"><td>{{name}}</td><td>{{address}}</td><td>{{city}}</td><td>{{state}}</td><td>{{country}}</td><td><a class="button" href="https://maps.google.com/maps?q={{address}},{{city}},{{state}}" target="_blank">G Map</a> <a class="button" href="http://www.yelp.com/search?find_desc={{name}}&find_loc={{city}},{{state}}" target="_blank">Yelp</a></td></tr>
-		  {{/rows}}
-	  </table>
-	</script>
+    <div id="content">
+    	<table>
+    		<thead><th>Name</th><th>Preferred Dates</th></thead>
+    		<tbody id="peeps"></tbody>
+    	</table>
+    </div>
 
-	<script id="latestSpot" type="text/html">
-			{{#rows}}
-				<h2>{{name}}</h2>
-				<p class="colorText">{{address}}<p>
-				<p class="colorText">{{city}}, {{state}}</p>
-				<ul>
-			  	<li><span class="category">Wifi:</span> {{wifipassword}}</li>
-			  	<li><span class="category">Outlets:</span> {{outlets}}</li>
-			  	<li><span class="category">Couch:</span> {{couch}}</li>
-			  	<li><span class="category">Large Table:</span> {{largetable}}</li>
-			  	<li><span class="category">Outdoor Seating:</span> {{outdoorseating}}</li>
-			  	<li><span class="category">Brewing:</span> {{brewing}}</li>
-			  	<li><span class="category">Contributed By:</span> <a href="http://www.twitter.com/{{contributerstwitter}}" target="_blank">@{{contributerstwitter}}</a></li>
-		  	</ul>
-		  {{/rows}}
-	</script>
+    <script id="niftyers-template" type="text/x-handlebars-template">
+      <tr class="entry">
+        <td><span>{{first}} {{last}}</span></td>
+        <td>{{preferred1}} Or {{preferred2}} Or {{preferred3}}</td>
+      </tr>
+    </script>
 
+    <!-- Don't need jQuery for Tabletop, but using it for this example -->
+    <script type="text/javascript" src="js/handlebars.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/tabletop.js"></script>
+    <script type="text/javascript">
+      var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/ccc?key=0Ap4bJiYhk0XrdFg1NThXMGdEOFRHamNVMk5fZkw3aXc#gid=0';
 
-	<script type="text/javascript">
-	  document.addEventListener('DOMContentLoaded', function() {
-	  	var gData
-	  	var URL = "0Ap4bJiYhk0XrdFg1NThXMGdEOFRHamNVMk5fZkw3aXc"
-			Tabletop.init( { key: URL, callback: showInfo, simpleSheet: true } ) 
-		}) 
-	</script>
+      $(document).ready( function() {
+        Tabletop.init( { key: public_spreadsheet_url,
+                         callback: showInfo,
+                         parseNumbers: true } );
+      });
 
-</body>
+      function showInfo(data, tabletop) {
+        var source   = $("#niftyers-template").html();
+        var template = Handlebars.compile(source);
+
+        $.each( tabletop.sheets("Peeps").all(), function(i, peep) {
+          var html = template(peep);
+          $("#peeps").append(html);
+        });
+      }
+    </script>
+  </body>
 </html>
